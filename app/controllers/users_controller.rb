@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy, :pick_team, :predict_games, :lock_players, :lock_games]
-
+  before_filter :authenticate_user!, only: [:pick_team, :predict_games, :show, :edit, :index]
+  before_filter :verify_is_admin, only: [:index]
 
  def create_predictions
    user = current_user

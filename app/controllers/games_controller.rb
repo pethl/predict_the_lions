@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy]
+  before_filter :verify_is_admin, only: [:show, :edit, :update, :destroy, :index]
 
   # GET /games
   # GET /games.json

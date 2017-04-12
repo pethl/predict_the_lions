@@ -13,6 +13,12 @@ class ApplicationController < ActionController::Base
     user_path(resource)
   end
   
+ 
+
+  def verify_is_admin
+    (current_user.nil?) ? redirect_to(root_path) : (redirect_to(root_path) unless current_user.admin?)
+  end
+  
   protected
 
    def configure_permitted_parameters

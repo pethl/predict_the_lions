@@ -1,5 +1,7 @@
 class PlayersController < ApplicationController
   before_action :set_player, only: [:show, :edit, :update, :destroy]
+  before_filter :verify_is_admin, only: [:show, :edit, :update, :destroy, :index]
+  
 
   # GET /players
   # GET /players.json
