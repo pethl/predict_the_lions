@@ -1,0 +1,113 @@
+<ul class="nav nav-tabs">
+  <li role="presentation"><%= link_to "Progress", user_path(@user) %></li>
+  <li role="presentation"><%= link_to "Pick Squad", pick_team_user_path(@user) %></li>
+  <li role="presentation" class="active"><%= link_to "Predict Games", predict_games_user_path(@user) %></li>
+</ul>
+ <% if @user.lock_games==false %>
+   
+ <% if @user.usergames.any? %>
+<div class="row">
+<div class="col-md-9">
+<h5>Predict Game Results</h5> 
+<small>
+<li>Pick the winning team by selecting "Home" or "Lions" for each game.</li>
+<li>Pick the margin of victory by selecting one of the points margins for each game.</li>
+<li>Click SAVE PREDICTIONS at any time to save your progress.</li>
+<li>When all 10 Done ticks are shown, LOCK button will appear.</li>
+<li><b>Only locked games will be considered for scoring.</b></li></small>
+<br>
+  <table class="table table-condensed">
+  <thead>
+  <tr>
+  <th></th>
+  <th></th>
+  <th colspan= "2" class="text-center">Pick The Winner</th>
+  <th colspan= "3" class="text-center">Victory Points Margin</th>
+  </tr>
+  <tr>
+    <th><small>Date</th>
+    <th><small>Opposition</th>
+    <th class="text-center"><small>Home </th>
+    <th class="text-center"><small>Lions </th>
+    <th class="text-center"><small>1-7 </th>
+    <th class="text-center"><small>8-14 </th>
+    <th class="text-center"><small>15+ </th>
+    <th class="text-center"><small>Done </th>
+     </tr>
+  </thead>
+  <tbody>
+  
+  <%= form_for @user do |f| %>
+        <%= f.fields_for :usergames do |builder| %>
+        
+           <tr> 
+           <fieldset>
+            <td><%= Game.find(builder.object.game_id).game_date.strftime('%e %B') %><br><%= Game.find(builder.object.game_id).game_date.strftime('%A') %></td>
+            <td><b><%= Game.find(builder.object.game_id).home_team %></b><br><%= Game.find(builder.object.game_id).location %></td>
+            <td  class="warning text-center"> <%= builder.radio_button :home_win, true %> </td>
+            <td class="warning text-center"> <%= builder.radio_button :home_win, false %> </td>
+            <td class="text-center"> <%= builder.radio_button :winning_margin, "A" %> </td>
+            <td class="text-center"> <%= builder.radio_button :winning_margin, "B" %> </td>
+            <td class="text-center"> <%= builder.radio_button :winning_margin, "C" %> </td>
+            <td class="text-center">
+            
+             <% if completeness_check(builder.object.id)== true  %>
+               <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+              <% else %>
+             <% end %>
+             </td>
+           </fieldset> 
+           </tr>
+        <% end %>
+  </tbody>
+  </table>
+ 
+  </div>
+  
+  
+  <div class="col-md-3">
+  <br>
+   <div class="well">
+  
+  <center>
+  <p>You are <%= game_prediction_progress(@user) %>% through creating game predictions.</p>
+    <%= f.submit "Save Predictions", class: "btn btn-info" %>
+         <% end %> 
+         <br>      <br>
+         <% if game_prediction_progress(@user)==100 %>
+           <%= form_tag lock_games_user_path, method: :post do %>
+             <%= submit_tag 'Lock My Games', class: "btn btn-success" %>
+           <% end %>
+          <% end %> 
+<% end %>  
+  </div>  
+  </div>
+</div>
+
+<% else %>
+<table class="table table-condensed">
+<thead>
+  <th><small>Date</th>
+  <th><small>Opposition</th>
+  
+  <th><small>Predicted Gap</th>
+  
+  <th><small>Predicted Winner</th>
+ </thead>
+<tbody>
+<% @user.usergames.each do |usergame| %>
+
+  <tr>
+    <td><%= Game.find(usergame.game_id).game_date.strftime('%e %B') %></td>
+    <td><%= Game.find(usergame.game_id).home_team %></td>
+    
+    <td><%= reverse_points_margin(usergame.winning_margin)%></td>
+       
+    <td><% if usergame.home_win==true %>Home<% elsif usergame.home_win==false %>Lions<% else %>Not declared<% end %></td>
+     </tr>
+
+<% end %>  
+</tbody>
+</table>
+
+  <% end %>

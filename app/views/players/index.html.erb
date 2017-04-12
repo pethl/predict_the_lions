@@ -1,0 +1,40 @@
+
+<h1>Listing Players</h1>
+<h6>Squad count: <%= @players.where(selected: true).count %></h6>
+
+<%= form_tag select_players_path, method: :put do %>
+<table class="table">
+  <thead>
+    <tr>
+    <th>&nbsp;</th>
+      <th>Name</th>
+      <th>Position</th>
+      <th>Selected</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @players.each do |player| %>
+      <tr>
+        <td><%= check_box_tag "player_ids[]", player.id %></td>
+        <% if player.selected==true %>
+        <td class="success"><%= player.name %></td>
+        <% else %>
+         <td><%= player.name %></td>
+        <% end %>
+        <td><%= player.position %></td>
+        <td><%= player.selected ? "Yes" : "No" %></td>
+        <td><%= link_to 'Show', player %></td>
+        <td><%= link_to 'Edit', edit_player_path(player) %></td>
+        <td><%= link_to 'Destroy', player, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= submit_tag "Select Player for Squad" %> 
+<% end %>
+
+<br>
+
+<%= link_to 'New Player', new_player_path %>

@@ -1,0 +1,115 @@
+<ul class="nav nav-tabs">
+  <li role="presentation"><%= link_to "Progress", user_path(@user) %></li>
+  <li role="presentation" class="active"><%= link_to "Pick Squad", pick_team_user_path(@user) %></li>
+  <li role="presentation"><%= link_to "Predict Games", predict_games_user_path(@user) %></li>
+</ul>
+
+<div class="row">
+<div class="col-md-7">
+ <h5>Choose your squad of 37 players then lock them in to enter the competition.</h5> 
+ <small>
+ <li>Select from available players by ticking the box next to their name then clicking ADD button.</li>
+ <li>Remove from your team by unticking the box next to their name and clicking the REMOVE button. </li>
+ <li>Multiple players can be added at the same time.</li>
+ <li>Multiple players can be removed at the same time.</li>
+ <li>When you have choosen 37 players a button will appear to let you lock in your choices.</li>
+ <li><b>Only locked teams will be entered for scoring.</b></li></small>
+ </div>
+ <div class="col-md-4">
+ <br>
+ <div class="well">
+ <h4>Squad Count:
+ <%= @selected.count %> of 37</h4>
+ <% if @selected.count==37 %>
+   <%= form_tag lock_players_user_path, method: :post do %>
+     <%= submit_tag 'Lock Squad', class: "btn btn-success" %>
+   <% end %>
+  <% end %>
+ </div></div></div>
+
+
+<div class="row">
+<div class="col-md-4">
+<h4>Available Players</h4>
+ <% if @user.lock_players==false %>  
+    <table class="table table-condensed">
+    <thead>
+      <th><small>Position</th>
+      <th><small>Name</th>
+      <th class="text-center"><small>Add</th>
+    </thead>
+    <tbody>
+    <%= form_for @user do |f| %>
+          <%= f.fields_for :userplayers do |builder| %>
+           <% unless builder.object.selected == true %>
+             <tr> 
+             <fieldset>
+              <td class="text-muted"><%= Player.find(builder.object.player_id).position %></td>
+              <td><%= Player.find(builder.object.player_id).name %></td>
+              <td class="text-center"><%= builder.check_box :selected %></td>
+             </fieldset> 
+             </tr>
+          <% end %>
+      <% end %>
+         </tbody>
+    </table>
+ </div>
+ 
+<div class="col-md-1">
+ <%= f.submit "Add", class: "btn btn-info" %>
+<% end %>  
+
+<% else %>
+<p>Squad has been choosen.</p>
+<% end %>
+</div>
+ 
+  <div class="col-md-5">
+  <h4>Your Chosen Squad </h4>
+    <% if @user.lock_players==false %> 
+       
+    <table class="table table-condensed">
+    <thead>
+      <th><small>Position</th>
+      <th><small>Name</th>
+      <th class="text-center"><small>Remove</th>
+    </thead>
+    <tbody>
+    <% if @selected.count== 0 %>
+      <tr>
+        <td colspan="3"><i>No players selected</i> <td>
+      </tr> 
+       <% else %>
+ <%= form_for @user do |f| %>
+       <%= f.fields_for :userplayers do |builder| %>
+        <% unless builder.object.selected == false %>
+          <tr> 
+          <fieldset>
+           <td class="text-muted"><%= Player.find(builder.object.player_id).position %></td>
+           <td><%= Player.find(builder.object.player_id).name %></td>
+           <td class="text-center"><%= builder.check_box :selected %></td>
+          </fieldset> 
+          </tr>
+       <% end %>
+      <% end %>
+  </tbody>
+</table>
+</div>
+<div class="col-md-1">
+  <%= f.submit "Remove", class: "btn btn-danger" %>
+ <% end %> 
+  <% end %> 
+  
+  <% else %>
+  <table>
+  <% @selected.each do |player| %>
+    <tr>
+    <td class="text-muted"><%= Player.find(player.player_id).position %></td>
+    <td><%= Player.find(player.player_id).name %></td>
+    </tr>
+    <% end %>
+  </table>
+   <% end %> 
+ </div>
+ </div>
+

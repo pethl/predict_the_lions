@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Userplayers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Player</th>
+      <th>Selected</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @userplayers.each do |userplayer| %>
+      <tr>
+        <td><%= userplayer.user_id %></td>
+        <td><%= userplayer.player_id %></td>
+        <td><%= userplayer.selected %></td>
+        <td><%= link_to 'Show', userplayer %></td>
+        <td><%= link_to 'Edit', edit_userplayer_path(userplayer) %></td>
+        <td><%= link_to 'Destroy', userplayer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Userplayer', new_userplayer_path %>

@@ -1,0 +1,169 @@
+<h3>Scoreboard Lions 2017</h3>
+<% if Usergame.any? %>
+
+<h6>Scores after <%=  Game.where("home_score IS NOT NULL").count %> games played.</h6>
+<hr>
+<% users_scores_hash.each do |user,score| %>
+<ul>
+<li><%= score %> - <%= User.find(user).name %></li>
+</ul>
+<% end %> 
+<hr>
+<div class="row">
+  <div class="col-md-12">       
+<table class="table table-bordered table-striped table-condensed">
+  <thead>
+    <tr>
+     <th>Points For</th>
+     <% @users.each do |user| %>
+       <% if who_is_the_leader==total_points_for_competition(user.id) %>
+    <th class="success"><center><small>1st Place</small><br><%= user.name %></th>
+     <% else %>
+      <th><center><%= user.name %></th>
+     <% end %>   <% end %>
+    </tr>
+  </thead>
+  <tbody>
+  <tr>
+  <td><b>Squad Points</b></td>
+  <% @users.each do |user| %>
+    <td><center><%= points_for_correct_squad_player(user.id) %></td>
+  <% end %>
+  </tr>
+  <tr>
+    <td class="active"><b>Result Points scored</td>
+     <% @users.each do |user| %>
+    <td class="active"><center><%= points_for_all_games(user.id) %></td>
+     <% end %>
+  </tr>
+  <tr>
+    <td class="active"><b>Margin Points scored</td>
+     <% @users.each do |user| %>
+    <td class="active"><center><%= points_for_all_game_margins(user.id) %></td>
+     <% end %>
+  </tr>
+  <tr>
+  <td><b>Total Points </b></td>
+  <% @users.each do |user| %>
+   <td><b><center><%= total_points_for_competition(user.id) %></center></b></td>
+  <% end %> 
+  </tr>  
+  </tbody>
+</table>
+  </div>
+</div>
+
+
+<h4>Squad Breakdown</h4>
+<div class="row">
+  <div class="col-md-12">       
+<table class="table table-bordered table-condensed">
+  <thead>
+    <tr>
+     <th>Player Name</th>
+     <% @users.each do |user| %>
+    <th><center><%= user.name %></th>
+     <% end %>
+    </tr>
+  </thead>
+  <tbody>
+  <% @chosen_players.each do |player| %>
+    <tr>
+    <td><%= player.name %></td>
+      <% @users.each do |user| %>
+       <% if cell(user.id,player.id)==true %><td class="info"><center>
+         <span class="glyphicon glyphicon-user" aria-hidden="true"></span></td><% else %><td></td><% end %>
+      <% end %> 
+    </tr>
+    <% end %>
+    <tr>
+      <td class="active"><b>Points scored</td>
+       <% @users.each do |user| %>
+      <td class="active"><center><b><%= points_for_correct_squad_player(user.id) %></b></td>
+       <% end %>
+    </tr>
+  </tbody>
+</table>
+  </div>
+</div>
+
+
+<h4>Result Breakdown</h4>
+<div class="row">
+  <div class="col-md-12">       
+<table class="table table-bordered table-condensed">
+  <thead>
+    <tr>
+     <th>Game</th>
+     <th><center>Winner</center></th>
+     <% @users.each do |user| %>
+    <th><center><%= user.name %></center></th>
+     <% end %>
+    </tr>
+  </thead>
+  <tbody>
+  <% @games.each do |game| %>
+    <tr>
+     <td><%= game.game_date.strftime('%a, %d %b') %>: <%= game.home_team%></td>
+       <td class="info"><center><%= who_won(game.id) %></center></td>
+   <% @users.each do |user| %>
+     <% if who_did_you_predict_to_win(game.id, user.id) == who_won(game.id) %>
+  <td class="info"><center><%= who_did_you_predict_to_win(game.id, user.id) %></center></td>
+    <% else %>
+     <td><center><%= who_did_you_predict_to_win(game.id, user.id) %></center></td>
+   <% end %>   <% end %>
+    </tr>
+     <% end %>
+    <tr>
+      <td colspan="2" class="active"><b>Result Points scored</td>
+       <% @users.each do |user| %>
+      <td class="active"><center><b><%= points_for_all_games(user.id) %></b></td>
+       <% end %>
+    </tr>  
+  </tbody>
+</table>
+  </div>
+</div>
+
+<h4>Margin Breakdown</h4>
+<div class="row">
+  <div class="col-md-12">       
+<table class="table table-bordered table-condensed">
+  <thead>
+    <tr>
+     <th>Game</th>
+     <th><center>Margin</center></th>
+     <% @users.each do |user| %>
+    <th><center><%= user.name %></center></th>
+     <% end %>
+    </tr>
+  </thead>
+  <tbody>
+  <% @games.each do |game| %>
+    <tr>
+     <td><%= game.game_date.strftime('%a, %d %b') %>: <%= game.home_team%></td>
+       <td class="info"><center><%= game.gap %></center></td>
+        <% @users.each do |user| %>
+          <% if (points_scored_for_correct_margin(game.id, user.id))==1 %>
+            <td class="info"><center> <%= reverse_points_margin(user.usergames.where(game_id: game.id).first.winning_margin) %></center></td>
+          <% else %>
+            <td><center><%= reverse_points_margin(user.usergames.where(game_id: game.id).first.winning_margin) %></center></td>
+          <% end %> 
+        <% end %> 
+    </tr>
+     <% end %> 
+    <tr>
+      <td colspan="2" class="active"><b>Margin Points scored</td>
+       <% @users.each do |user| %>
+      <td class="active"><center><b><%= points_for_all_game_margins(user.id) %></b></td>
+       <% end %>
+    </tr>
+  </tbody>
+</table>
+  </div>
+</div> 
+
+<% else %>
+<p>No predictions created yet.</p>
+     <% end %>
+

@@ -1,0 +1,40 @@
+
+<h1>Listing Games</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Game date</th>
+      <th>Ref</th>
+      <th>Home team</th>
+      <th>Away team</th>
+      <th>Location</th>
+      <th>Home score</th>
+      <th>Away score</th>
+      <th>Gap</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @games.each do |game| %>
+      <tr>
+        <td><%= game.game_date %></td>
+        <td><%= game.ref %></td>
+        <td><%= game.home_team %></td>
+        <td><%= game.away_team %></td>
+        <td><%= game.location %></td>
+        <td><%= game.home_score %></td>
+        <td><%= game.away_score %></td>
+        <td><%= game.gap %></td>
+        <td><%= link_to 'Show', game %></td>
+        <td><%= link_to 'Edit', edit_game_path(game) %></td>
+        <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Game', new_game_path %>

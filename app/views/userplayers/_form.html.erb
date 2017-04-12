@@ -1,0 +1,31 @@
+<%= form_for(@userplayer) do |f| %>
+  <% if @userplayer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@userplayer.errors.count, "error") %> prohibited this userplayer from being saved:</h2>
+
+      <ul>
+      <% @userplayer.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :user_id %><br>
+    <%= f.collection_select :user_id, User.all, :id, :email, {:prompt => 'Please select user'} %>   
+  
+  </div>
+  <div class="field">
+    <%= f.label :player_id %><br>
+    <%= f.collection_select :player_id, Player.all, :id, :name, {:prompt => 'Please select player'} %>   
+  
+  </div>
+  <div class="field">
+    <%= f.label :selected %><br>
+    <%= f.check_box :selected %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

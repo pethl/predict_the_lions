@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  game_date: 2017-03-30
+  ref: 1
+  home_team: MyString
+  away_team: MyString
+  location: MyString
+  home_score: 1
+  away_score: 1
+  gap: 1
+
+two:
+  game_date: 2017-03-30
+  ref: 1
+  home_team: MyString
+  away_team: MyString
+  location: MyString
+  home_score: 1
+  away_score: 1
+  gap: 1

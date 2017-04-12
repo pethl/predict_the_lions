@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Usergames</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Game</th>
+      <th>Home win</th>
+      <th>Away win</th>
+      <th>Margin a</th>
+      <th>Margin b</th>
+      <th>Margin c</th>
+      <th>Points for game</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @usergames.each do |usergame| %>
+      <tr>
+        <td><%= usergame.user_id %></td>
+        <td><%= usergame.game_id %></td>
+        <td><%= usergame.home_win %></td>
+        <td><%= usergame.away_win %></td>
+        <td><%= usergame.margin_a %></td>
+        <td><%= usergame.margin_b %></td>
+        <td><%= usergame.margin_c %></td>
+        <td><%= usergame.points_for_game %></td>
+        <td><%= link_to 'Show', usergame %></td>
+        <td><%= link_to 'Edit', edit_usergame_path(usergame) %></td>
+        <td><%= link_to 'Destroy', usergame, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Usergame', new_usergame_path %>

@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @usergame.user_id %>
+</p>
+
+<p>
+  <strong>Game:</strong>
+  <%= @usergame.game_id %>
+</p>
+
+<p>
+  <strong>Home win:</strong>
+  <%= @usergame.home_win %>
+</p>
+
+<p>
+  <strong>Away win:</strong>
+  <%= @usergame.away_win %>
+</p>
+
+<p>
+  <strong>Margin a:</strong>
+  <%= @usergame.margin_a %>
+</p>
+
+<p>
+  <strong>Margin b:</strong>
+  <%= @usergame.margin_b %>
+</p>
+
+<p>
+  <strong>Margin c:</strong>
+  <%= @usergame.margin_c %>
+</p>
+
+<p>
+  <strong>Points for game:</strong>
+  <%= @usergame.points_for_game %>
+</p>
+
+<%= link_to 'Edit', edit_usergame_path(@usergame) %> |
+<%= link_to 'Back', usergames_path %>

@@ -1,0 +1,52 @@
+<div class="row">
+<div class="col-md-12">
+ 
+  <% if @user.userplayers.count == 0 %>
+    <h4>Hi <strong> <%= @user.name %></strong></h4><hr>
+
+    
+    <%= form_tag create_predictions_user_path, method: :post do %>
+      <%= submit_tag 'Create Your Predicitions' %>
+    <% end %>
+     <hr>
+
+ <% else %>
+ 
+ <ul class="nav nav-tabs">
+   <li role="presentation" class="active"><%= link_to "Progress", user_path(@user) %></li>
+   <li role="presentation"><%= link_to "Pick Squad", pick_team_user_path(@user) %></li>
+   <li role="presentation"><%= link_to "Predict Games", predict_games_user_path(@user) %></li>
+ </ul>
+ <br>
+ <h5>
+ <% if @user.lock_players == false %> 
+    <% if @selected.count == 37 %> 
+   SQUAD: You have selected <%= @selected.count %> out of 37 players, now please <b>LOCK your SQUAD.</b>
+    <% else %>
+     SQUAD: You have selected <%= @selected.count %> out of 37 players
+     <% end %>
+ <% else %>
+   SQUAD: Congratulations, your squad is <font color=green>LOCKED</font> 
+<% end %>
+</h5>
+
+  <h5>
+  <% if @user.lock_games == false %> 
+     <% if @selected.count == 37 %> 
+   GAMES: You are <%= game_prediction_progress(@user) %>% through creating game predictions, now please <b>LOCK your GAMES.
+   <% else %>
+    GAMES: You are <%= game_prediction_progress(@user) %>% through creating game predictions
+    <% end %>
+  <% else %>
+    GAMES: Congratulations, your games are <font color=green>LOCKED</font> 
+ <% end %>
+ </h5>
+ 
+ 
+ 
+
+ 
+<% end %>
+
+</div>
+</div>

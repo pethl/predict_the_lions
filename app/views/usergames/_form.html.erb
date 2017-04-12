@@ -1,0 +1,53 @@
+<%= form_for(@usergame) do |f| %>
+  <% if @usergame.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@usergame.errors.count, "error") %> prohibited this usergame from being saved:</h2>
+
+      <ul>
+      <% @usergame.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :user_id %><br>
+  
+    <%= f.collection_select :user_id, User.all, :id, :email, {:prompt => 'Please select user'} %>   
+ 
+  </div>
+  <div class="field">
+    <%= f.label :game_id %><br>
+   
+    <%= f.collection_select :game_id, Game.all, :id, :away_team, {:prompt => 'Please select game'} %>   
+ 
+  </div>
+  <div class="field">
+    <%= f.label :home_win %><br>
+    <%= f.check_box :home_win %>
+  </div>
+  <div class="field">
+    <%= f.label :away_win %><br>
+    <%= f.check_box :away_win %>
+  </div>
+  <div class="field">
+    <%= f.label :margin_a %><br>
+    <%= f.check_box :margin_a %>
+  </div>
+  <div class="field">
+    <%= f.label :margin_b %><br>
+    <%= f.check_box :margin_b %>
+  </div>
+  <div class="field">
+    <%= f.label :margin_c %><br>
+    <%= f.check_box :margin_c %>
+  </div>
+  <div class="field">
+    <%= f.label :points_for_game %><br>
+    <%= f.number_field :points_for_game %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
