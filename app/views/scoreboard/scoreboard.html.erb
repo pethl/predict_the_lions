@@ -5,7 +5,7 @@
 <hr>
 <% users_scores_hash.each do |user,score| %>
 <ul>
-<li><%= score %> - <%= User.find(user).name.capitalize %> (<%= User.find(user).name.capitalize[0,3] %>)</li>
+<li><%= score %> - <%= User.find(user).name.capitalize %> (<%= User.find(user).name.capitalize[0,4] %>)</li>
 </ul>
 <% end %> 
 <hr>
@@ -17,9 +17,9 @@
      <th>Points For</th>
      <% @users.each do |user| %>
        <% if who_is_the_leader==total_points_for_competition(user.id) %>
-    <th class="success"><center><small><i>1st Place</i></small><br><%= user.name.capitalize[0,3] %></th>
+    <th class="success"><center><small><i>1st Place</i></small><br><%= user.name.capitalize[0,4] %></th>
      <% else %>
-      <th><center><%= user.name.capitalize[0,3] %></th>
+      <th><center><%= user.name.capitalize[0,4] %></th>
      <% end %>   <% end %>
     </tr>
   </thead>
@@ -62,7 +62,7 @@
     <tr>
      <th>Player Name</th>
      <% @users.each do |user| %>
-    <th><center><%= user.name.capitalize[0,3] %></th>
+    <th><center><%= user.name.capitalize[0,4] %></th>
      <% end %>
     </tr>
   </thead>
@@ -99,7 +99,7 @@
      <th>Game</th>
      <th><center>Winner</center></th>
      <% @users.each do |user| %>
-    <th><center><%= user.name.capitalize[0,3] %></center></th>
+    <th><center><%= user.name.capitalize[0,4] %></center></th>
      <% end %>
     </tr>
   </thead>
@@ -136,7 +136,7 @@
      <th>Game</th>
      <th><center>Margin</center></th>
      <% @users.each do |user| %>
-    <th><center><%= user.name.capitalize[0,3] %></center></th>
+    <th><center><%= user.name.capitalize[0,4] %></center></th>
      <% end %>
     </tr>
   </thead>
