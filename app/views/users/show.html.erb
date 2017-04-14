@@ -3,7 +3,6 @@
  
   <% if @user.userplayers.count == 0 %>
     <h4>Hi <strong> <%= @user.name %></strong></h4><hr>
-
     
     <%= form_tag create_predictions_user_path, method: :post do %>
       <%= submit_tag 'Create Your Predicitions' %>
