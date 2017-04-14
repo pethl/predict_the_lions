@@ -5,5 +5,6 @@ class ScoreboardController < ApplicationController
     @chosen_players = Player.where(selected: true)
     @usersgames = User.where(lock_games: true)
     @games = Game.all
+    @first_game_date = @games.first.game_date
   end
 end

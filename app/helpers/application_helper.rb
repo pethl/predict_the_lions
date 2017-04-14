@@ -57,7 +57,7 @@ module ApplicationHelper
           return "Draw"
         end
       else
-       return 
+       return "Null"
      end  
    end
   

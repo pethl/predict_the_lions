@@ -5,7 +5,7 @@
 <hr>
 <% users_scores_hash.each do |user,score| %>
 <ul>
-<li><%= score %> - <%= User.find(user).name %></li>
+<li><%= score %> - <%= User.find(user).name.capitalize %></li>
 </ul>
 <% end %> 
 <hr>
@@ -19,7 +19,7 @@
        <% if who_is_the_leader==total_points_for_competition(user.id) %>
     <th class="success"><center><small>1st Place</small><br><%= user.name %></th>
      <% else %>
-      <th><center><%= user.name %></th>
+      <th><center><%= user.name.capitalize %></th>
      <% end %>   <% end %>
     </tr>
   </thead>
@@ -62,14 +62,14 @@
     <tr>
      <th>Player Name</th>
      <% @users.each do |user| %>
-    <th><center><%= user.name %></th>
+    <th><center><%= user.name.capitalize[0,4] %></th>
      <% end %>
     </tr>
   </thead>
   <tbody>
   <% @chosen_players.each do |player| %>
     <tr>
-    <td><%= player.name %></td>
+    <td><%= player.name  %></td>
       <% @users.each do |user| %>
        <% if cell(user.id,player.id)==true %><td class="info"><center>
          <span class="glyphicon glyphicon-user" aria-hidden="true"></span></td><% else %><td></td><% end %>
@@ -87,7 +87,9 @@
   </div>
 </div>
 
-
+<% if Date.today >= @first_game_date %>
+  
+  
 <h4>Result Breakdown</h4>
 <div class="row">
   <div class="col-md-12">       
@@ -97,7 +99,7 @@
      <th>Game</th>
      <th><center>Winner</center></th>
      <% @users.each do |user| %>
-    <th><center><%= user.name %></center></th>
+    <th><center><%= user.name.capitalize[0,4] %></center></th>
      <% end %>
     </tr>
   </thead>
@@ -134,7 +136,7 @@
      <th>Game</th>
      <th><center>Margin</center></th>
      <% @users.each do |user| %>
-    <th><center><%= user.name %></center></th>
+    <th><center><%= user.name.capitalize[0,4] %></center></th>
      <% end %>
     </tr>
   </thead>
@@ -163,7 +165,11 @@
   </div>
 </div> 
 
+<% end %>
+
 <% else %>
 <p>No predictions created yet.</p>
      <% end %>
+     
+         
 
