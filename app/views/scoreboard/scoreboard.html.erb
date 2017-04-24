@@ -1,60 +1,17 @@
 <h3>Scoreboard Lions 2017</h3>
+<hr>
+
+<h4>Scores after squad annoucement</h4>
+
 <% if Usergame.any? %>
-
-<h6>Scores after <%=  Game.where("home_score IS NOT NULL").count %> games played.</h6>
-<hr>
-<% users_scores_hash.each do |user,score| %>
-<ul>
-<li><%= score %> - <%= User.find(user).name.capitalize %> (<%= User.find(user).name.capitalize[0,4] %>)</li>
-</ul>
-<% end %> 
-<hr>
-<div class="row">
-  <div class="col-md-12">       
-<table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-     <th>Points For</th>
-     <% @users.each do |user| %>
-       <% if who_is_the_leader==total_points_for_competition(user.id) %>
-    <th class="success"><center><small><i>1st Place</i></small><br><%= user.name.capitalize[0,4] %></th>
-     <% else %>
-      <th><center><%= user.name.capitalize[0,4] %></th>
-     <% end %>   <% end %>
-    </tr>
-  </thead>
-  <tbody>
-  <tr>
-  <td><b>Squad Points</b></td>
-  <% @users.each do |user| %>
-    <td><center><%= points_for_correct_squad_player(user.id) %></td>
+   <ul>
+  <% users_scores_for_squad_hash.each do |user,score| %>
+  <li><%= score %> - <%= User.find(user).name.capitalize %> (<%= User.find(user).name.capitalize[0,4] %>)</li>
   <% end %>
-  </tr>
-  <tr>
-    <td class="active"><b>Result Points scored</td>
-     <% @users.each do |user| %>
-    <td class="active"><center><%= points_for_all_games(user.id) %></td>
-     <% end %>
-  </tr>
-  <tr>
-    <td class="active"><b>Margin Points scored</td>
-     <% @users.each do |user| %>
-    <td class="active"><center><%= points_for_all_game_margins(user.id) %></td>
-     <% end %>
-  </tr>
-  <tr>
-  <td><b>Total Points </b></td>
-  <% @users.each do |user| %>
-   <td><b><center><%= total_points_for_competition(user.id) %></center></b></td>
-  <% end %> 
-  </tr>  
-  </tbody>
-</table>
-  </div>
-</div>
+  </ul>
+  <hr>
 
-
-<h4>Squad Breakdown</h4>
+<h4>Squad Breakdown Scoring</h4>
 <div class="row">
   <div class="col-md-12">       
 <table class="table table-bordered table-condensed">

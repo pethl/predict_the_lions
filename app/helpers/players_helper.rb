@@ -89,9 +89,20 @@ module PlayersHelper
   
   def users_scores_hash
     @theusers = User.where("lock_games=? AND lock_players=?", true, true).pluck("id")
+    # @theusers = User.where(lock_players: true).pluck("id")
     @leaderboard=Hash.new
     @theusers.each do |user|
     @leaderboard[user] = total_points_for_competition(user)
+    end
+    return  @leaderboard.sort_by {|_key, value| value}.reverse!
+    
+  end  
+  
+  def users_scores_for_squad_hash
+    @alltheusers = User.where(lock_players: true).pluck("id")
+    @leaderboard=Hash.new
+    @alltheusers.each do |user|
+    @leaderboard[user] = points_for_correct_squad_player(user)
     end
     return  @leaderboard.sort_by {|_key, value| value}.reverse!
     

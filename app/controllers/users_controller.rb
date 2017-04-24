@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy, :pick_team, :predict_games, :lock_players, :lock_games]
-  before_filter :authenticate_user!, only: [:pick_team, :predict_games, :show, :edit, :index]
+  before_filter :authenticate_user!, only: [:pick_team, :pick_team, :show, :edit, :index]
   before_filter :verify_is_admin, only: [:index]
+  before_action :check_user, only: [:pick_team, :pick_team, :edit, :show]
 
  def create_predictions
    user = current_user
@@ -110,4 +111,10 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:name, :lock_players, :lock_games, :userplayers_attributes => [:id, :player_id, :user_id, :selected], :usergames_attributes => [:id, :user_id, :game_id, :home_win, :away_win, :margin_a, :margin_b, :margin_c, :winning_margin, :points_for_game])
     end
+    
+    def check_user
+      if current_user != @user
+             redirect_to root_url, alert: "Sorry, This Profile belongs to someone else !"
+           end
+         end
 end
