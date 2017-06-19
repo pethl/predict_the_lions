@@ -6,7 +6,7 @@
 <% if Usergame.any? %>
    <ul>
   <% users_scores_for_squad_hash.each do |user,score| %>
-  <li><%= score %> - <%= User.find(user).name.capitalize %> (<%= User.find(user).name.capitalize[0,4] %>)</li>
+  <li><%= score %> - <%= User.find(user).name.capitalize %> (<%= User.find(user).initials %>)</li>
   <% end %>
   </ul>
   <hr>
@@ -19,7 +19,7 @@
     <tr>
      <th>Player Name</th>
      <% @users.each do |user| %>
-    <th><center><%= user.name.capitalize[0,4] %></th>
+    <th><center><%= user.initials %></th>
      <% end %>
     </tr>
   </thead>
@@ -56,7 +56,7 @@
      <th>Game</th>
      <th><center>Winner</center></th>
      <% @users.each do |user| %>
-    <th><center><%= user.name.capitalize[0,4] %></center></th>
+    <th><center><%= user.initials %></center></th>
      <% end %>
     </tr>
   </thead>
@@ -93,7 +93,7 @@
      <th>Game</th>
      <th><center>Margin</center></th>
      <% @users.each do |user| %>
-    <th><center><%= user.name.capitalize[0,4] %></center></th>
+    <th><center><%= user.initials %></center></th>
      <% end %>
     </tr>
   </thead>

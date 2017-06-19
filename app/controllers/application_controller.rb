@@ -13,7 +13,6 @@ class ApplicationController < ActionController::Base
     user_path(resource)
   end
   
- 
 
   def verify_is_admin
     (current_user.nil?) ? redirect_to(root_path) : (redirect_to(root_path) unless current_user.admin?)
@@ -24,6 +23,6 @@ class ApplicationController < ActionController::Base
    def configure_permitted_parameters
    # devise_parameter_sanitizer.for(:sign_up) << :name
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:name])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :email, :initials])
    end
 end
