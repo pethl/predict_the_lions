@@ -7,7 +7,7 @@
    
  <% if @user.usergames.any? %>
 <div class="row">
-<div class="col-md-9">
+<div class="col-md-10">
 <h5>Predict Game Results</h5> 
 <small>
 <li>Pick the winning team by selecting "Home" or "Lions" for each game.</li>
@@ -61,13 +61,9 @@
         <% end %>
   </tbody>
   </table>
- 
-  </div>
+
   
-  
-  <div class="col-md-3">
   <br>
-   <div class="well">
   
   <center>
   <p>You are <%= game_prediction_progress(@user) %>% through creating game predictions.</p>
@@ -80,18 +76,18 @@
            <% end %>
           <% end %> 
 <% end %>  
-  </div>  
+
   </div>
 </div>
 
 <% else %>
+<div class="row">
+<div class="col-md-10">
 <table class="table table-condensed">
 <thead>
   <th><small>Date</th>
   <th><small>Opposition</th>
-  
   <th><small>Predicted Gap</th>
-  
   <th><small>Predicted Winner</th>
  </thead>
 <tbody>
@@ -109,5 +105,6 @@
 <% end %>  
 </tbody>
 </table>
+</div></div>
 
   <% end %>
