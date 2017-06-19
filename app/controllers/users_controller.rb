@@ -109,7 +109,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :lock_players, :lock_games, :userplayers_attributes => [:id, :player_id, :user_id, :selected], :usergames_attributes => [:id, :user_id, :game_id, :home_win, :away_win, :margin_a, :margin_b, :margin_c, :winning_margin, :points_for_game])
+      params.require(:user).permit(:name, :initials, :lock_players, :lock_games, :userplayers_attributes => [:id, :player_id, :user_id, :selected], :usergames_attributes => [:id, :user_id, :game_id, :home_win, :away_win, :margin_a, :margin_b, :margin_c, :winning_margin, :points_for_game])
     end
     
     def check_user
